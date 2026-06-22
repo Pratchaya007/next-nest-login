@@ -8,6 +8,7 @@ import { UploadModule } from './shared/upload/upload.module';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { RoleGuard } from './auth/guards/role.guard';
 
 @Module({
   imports: [
@@ -21,7 +22,11 @@ import { AuthGuard } from './auth/guards/auth.guard';
   providers: [
     {
       provide: APP_GUARD,
-      useClass: AuthGuard
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
     },
     {
       provide: APP_INTERCEPTOR,

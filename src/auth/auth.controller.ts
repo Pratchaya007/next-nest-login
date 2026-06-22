@@ -6,18 +6,29 @@ import { LoginDto } from './dtos/login.dto';
 import { UserWithOutPassword } from 'src/user/types/user.type';
 import { CurrentUser } from './decorators/current-user.decorators';
 import type { JwtPayload } from 'src/types/jwt-payload.type';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { Public } from './decorators/public.decorator';
+import { LoginResponseDto } from './dtos/login-response.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @ResponseMessage('register account create successfuly!')
   @Post('register')
   async register(@Body() registerdto: RegisterDto): Promise<void> {
     await this.authService.register(registerdto);
   }
 
+  @Public()
+  @ApiOkResponse({
+    description: 'Successfully operation',
+    type: LoginResponseDto
+  })
+  @ApiUnauthorizedResponse({
+    description: 'The provided credentials is ivalid'
+  })
   @Post('login')
   async login(@Body() loginDto: LoginDto): Promise<{
     accessToken: string;

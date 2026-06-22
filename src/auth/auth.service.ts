@@ -13,6 +13,7 @@ import { LoginDto } from './dtos/login.dto';
 import { AuthTokenService } from 'src/shared/security/services/auth-token.service';
 import { UserWithOutPassword } from 'src/user/types/user.type';
 import { UserService } from 'src/user/user.service';
+import { createHash } from 'crypto';
 
 @Injectable()
 export class AuthService {

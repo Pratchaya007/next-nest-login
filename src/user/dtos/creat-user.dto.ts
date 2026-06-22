@@ -38,6 +38,9 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'name is required' })
   name!: string;
 
+  @ApiProperty({
+    example: 'ADMIN',
+  })
   @IsEnum(Role, {
     message:
       'Role must be one fo th following values: ADMIN , USER ,SUPERADMIN ',
