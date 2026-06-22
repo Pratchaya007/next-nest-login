@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 import { SuccessResponse } from '../types/response.type';
 import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
-import { RESPONSE_MESSAGE_KEY } from '../decorators/message-response.dto';
+import { RESPONSE_MESSAGE_KEY } from '../decorators/message-response.decorator';
 
 @Injectable()
 export class TransformInterceptor implements NestInterceptor {
