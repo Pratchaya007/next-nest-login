@@ -11,6 +11,7 @@ import { BcryptService } from 'src/shared/security/services/bcrypt.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { CloudinaryService } from 'src/shared/upload/cloudinary.service';
+import { UpdateNameDto } from './dtos/updata-name.dto';
 
 @Injectable()
 export class UserService {
@@ -30,6 +31,16 @@ export class UserService {
         code: 'USER_NOT_FOUND',
       });
     return user;
+  }
+
+  async updataUser(
+    id: string,
+    updataUserdto: UpdateNameDto,
+  ): Promise<UserWithOutPassword> {
+    return this.prisma.user.update({
+      where: { id },
+      data: updataUserdto
+    })
   }
 
   async createAdmin(creaAdminDto: CreateAdminDto): Promise<void> {
