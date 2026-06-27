@@ -12,7 +12,7 @@ export class EmailService {
 
   async sendPasswordResetEmail(email: string, token: string) {
     const appUrl = this.typedConfigService.get('APP_URL');
-    const resetUrl = `${appUrl}/api/auth/reset-password?token=${token}`;
+    const resetUrl = `${appUrl}/reset-password?token=${token}`;
 
     await this.resend.emails.send({
       from: 'onboarding@resend.dev',
