@@ -39,7 +39,7 @@ export class UserController {
   }
 
   @ResponseMessage('Updata User Successfully!')
-  @Post('/updata')
+  @Post('update')
   async updataUser(
     @CurrentUser() user: JwtPayload,
     @Body() updataUserDto: UpdateNameDto,

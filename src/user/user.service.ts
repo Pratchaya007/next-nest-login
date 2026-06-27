@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { UserWithOutPassword } from './types/user.type';
 import { PrismaService } from 'src/database/prisma.service';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from 'src/auth/service/auth.service';
 import { CreateAdminDto } from './dtos/create-admin.dto';
 import { BcryptService } from 'src/shared/security/services/bcrypt.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';

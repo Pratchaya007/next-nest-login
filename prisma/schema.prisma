@@ -15,13 +15,16 @@ enum Role {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String   @db.VarChar(20)
-  role      Role     @default(USER)
-  avatarUrl String?
-  coverUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  password            String
+  name                String    @db.VarChar(20)
+  role                Role      @default(USER)
+  avatarUrl           String?
+  coverUrl            String?
+  resetToken          String?
+  resetTokenExpiresAt DateTime? @db.Timestamptz()
+  refreshTokenHash    String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 }

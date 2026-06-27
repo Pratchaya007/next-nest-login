@@ -10,7 +10,8 @@ const envScheme = z.object({
   JWT_EXPIRES_IN: z.coerce.number(),
   CLOUDINARY_CLOUD_NAME: z.string().min(1),
   CLOUDINARY_API_KEY: z.string().min(1),
-  CLOUDINARY_API_SECRET: z.string().min(1)
+  CLOUDINARY_API_SECRET: z.string().min(1),
+  RESEND_API_KEY: z.string().min(10)
 });
 
 export type EnvConfigType = z.infer<typeof envScheme>;

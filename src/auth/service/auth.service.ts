@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   UnauthorizedException,
@@ -6,14 +7,17 @@ import {
 import { TypedConfigService } from 'src/config/typed-config.service';
 import { PrismaService } from 'src/database/prisma.service';
 import { BcryptService } from 'src/shared/security/services/bcrypt.service';
-import { RegisterDto } from './dtos/register.dto';
+import { RegisterDto } from '../dtos/register.dto';
 import { User } from 'src/database/generated/prisma/client';
 import { PrismaClientKnownRequestError } from 'src/database/generated/prisma/internal/prismaNamespace';
-import { LoginDto } from './dtos/login.dto';
+import { LoginDto } from '../dtos/login.dto';
 import { AuthTokenService } from 'src/shared/security/services/auth-token.service';
 import { UserWithOutPassword } from 'src/user/types/user.type';
 import { UserService } from 'src/user/user.service';
 import { createHash } from 'crypto';
+import { ResponseMessage } from 'src/common/decorators/message-response.decorator';
+import crypto from 'crypto';
+import { EmailService } from './email.service';
 
 @Injectable()
 export class AuthService {
@@ -22,7 +26,8 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly bcryptSservice: BcryptService,
     private readonly authTokenService: AuthTokenService,
-    private readonly userService: UserService
+    private readonly userService: UserService,
+    private readonly emailService: EmailService
   ) {}
 
   async register(registerDto: RegisterDto): Promise<User> {
@@ -82,7 +87,70 @@ export class AuthService {
     return { accessToken, user: rest };
   }
 
-  async getCurrentUser(id:string): Promise<UserWithOutPassword> {
-    return this.userService.findById(id)
+  @ResponseMessage('If an account with that eamil existe, a reset link has been sent')
+  async forgotPassword(email: string) {
+    // find email
+    const user = await this.prisma.user.findUnique({ where: { email } });
+    if (!user)
+      throw new BadRequestException({
+        message: 'No account found with this email address',
+        code: 'NO_ACCOUNT_IN_DATABASE',
+      });
+
+    //Create token new in db
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetTokenExpiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hr
+
+    // insert to db
+    await this.prisma.user.update({
+      where: {id: user.id},
+      data: {
+        resetToken,
+        resetTokenExpiresAt
+      }
+    })
+
+    // send mail
+    void this.emailService.sendPasswordResetEmail(user.email, resetToken);
+    
+  }
+
+  @ResponseMessage('Password reset successfully. You can now log in')
+  async resetPassword(token: string, newPassword: string) {
+    //find email
+    const user = await this.prisma.user.findFirst({
+      where: { resetToken: token },
+    });
+    if (!user || !user.resetToken) {
+      throw new BadRequestException({
+        message: 'Invalid reset Token',
+        code: 'INVALID_RESET_TOKEN',
+      });
+    }
+    //เช็กว่า resetTokenExpiresAt มีค่าไหม  ถ้ามี และเวลาหมดอายุ น้อยกว่าเวลาปัจจุบัน  แปลว่า Reset Token หมดอายุแล้ว
+    if (user.resetTokenExpiresAt && user.resetTokenExpiresAt < new Date()) {
+      throw new BadRequestException({
+        message: 'Reset Token has Expired. Please request a new one',
+        code: 'RESET_TOKEN_HAS_EXPIRED',
+      });
+    }
+
+    // Hash Password
+    const password = await this.bcryptSservice.hash(newPassword);
+
+    // insert to db
+    await this.prisma.user.update({
+      where: { id: user.id },
+      data: {
+        password,
+        resetToken: null,
+        resetTokenExpiresAt: null,
+        refreshTokenHash: null,
+      },
+    });
+  }
+
+  async getCurrentUser(id: string): Promise<UserWithOutPassword> {
+    return this.userService.findById(id);
   }
 }
