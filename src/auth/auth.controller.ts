@@ -23,10 +23,14 @@ import { Public } from './decorators/public.decorator';
 import { LoginResponseDto } from './dtos/login-response.dto';
 import { ForgotPasswordDto } from './dtos/forgot-password.dto';
 import { ResetPasswordDto } from './dtos/reset-password.dto';
+import { GoogleLoginDto } from './dtos/google-login.dto';
+import { GoogleService } from './service/google.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService,
+    private readonly googleService: GoogleService
+  ) {}
 
   @Public()
   @ResponseMessage('register account create successfuly!')
@@ -50,6 +54,16 @@ export class AuthController {
   }> {
     return await this.authService.login(loginDto);
   }
+
+  // POSt /api/auth/google
+  @Public()
+  @ApiOperation({ summary: 'Request a password reset email' })
+  @HttpCode(HttpStatus.OK)
+  @Post('google')
+  googleLogin(@Body() googleLoginDto: GoogleLoginDto) {
+    return this.googleService.googleLogin(googleLoginDto.idToekn)
+  }
+
 
   // POST /api/auth/forgot-password
   @Public()

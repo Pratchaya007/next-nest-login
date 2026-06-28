@@ -20,6 +20,7 @@ model User {
   password            String
   name                String    @db.VarChar(20)
   role                Role      @default(USER)
+  googleId            String?   @unique
   avatarUrl           String?
   coverUrl            String?
   resetToken          String?

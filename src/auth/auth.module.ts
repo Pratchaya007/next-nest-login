@@ -4,11 +4,12 @@ import { AuthService } from './service/auth.service';
 import { SecurityModule } from 'src/shared/security/security.module';
 import { UserModule } from 'src/user/user.module';
 import { EmailService } from './service/email.service';
+import { GoogleService } from './service/google.service';
 
 @Module({
   imports: [SecurityModule, UserModule],
   controllers: [AuthController],
-  providers: [AuthService, EmailService],
+  providers: [AuthService, EmailService, GoogleService],
   exports: [AuthService],
 })
 export class AuthModule {}

@@ -30,6 +30,7 @@ export type UserMinAggregateOutputType = {
   password: string | null
   name: string | null
   role: $Enums.Role | null
+  googleId: string | null
   avatarUrl: string | null
   coverUrl: string | null
   resetToken: string | null
@@ -45,6 +46,7 @@ export type UserMaxAggregateOutputType = {
   password: string | null
   name: string | null
   role: $Enums.Role | null
+  googleId: string | null
   avatarUrl: string | null
   coverUrl: string | null
   resetToken: string | null
@@ -60,6 +62,7 @@ export type UserCountAggregateOutputType = {
   password: number
   name: number
   role: number
+  googleId: number
   avatarUrl: number
   coverUrl: number
   resetToken: number
@@ -77,6 +80,7 @@ export type UserMinAggregateInputType = {
   password?: true
   name?: true
   role?: true
+  googleId?: true
   avatarUrl?: true
   coverUrl?: true
   resetToken?: true
@@ -92,6 +96,7 @@ export type UserMaxAggregateInputType = {
   password?: true
   name?: true
   role?: true
+  googleId?: true
   avatarUrl?: true
   coverUrl?: true
   resetToken?: true
@@ -107,6 +112,7 @@ export type UserCountAggregateInputType = {
   password?: true
   name?: true
   role?: true
+  googleId?: true
   avatarUrl?: true
   coverUrl?: true
   resetToken?: true
@@ -195,6 +201,7 @@ export type UserGroupByOutputType = {
   password: string
   name: string
   role: $Enums.Role
+  googleId: string | null
   avatarUrl: string | null
   coverUrl: string | null
   resetToken: string | null
@@ -231,6 +238,7 @@ export type UserWhereInput = {
   password?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  googleId?: Prisma.StringNullableFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableFilter<"User"> | string | null
   coverUrl?: Prisma.StringNullableFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableFilter<"User"> | string | null
@@ -246,6 +254,7 @@ export type UserOrderByWithRelationInput = {
   password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  googleId?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -258,6 +267,7 @@ export type UserOrderByWithRelationInput = {
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  googleId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -271,7 +281,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   refreshTokenHash?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-}, "id" | "email">
+}, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -279,6 +289,7 @@ export type UserOrderByWithAggregationInput = {
   password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  googleId?: Prisma.SortOrderInput | Prisma.SortOrder
   avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   coverUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   resetToken?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -300,6 +311,7 @@ export type UserScalarWhereWithAggregatesInput = {
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  googleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   coverUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   resetToken?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -315,6 +327,7 @@ export type UserCreateInput = {
   password: string
   name: string
   role?: $Enums.Role
+  googleId?: string | null
   avatarUrl?: string | null
   coverUrl?: string | null
   resetToken?: string | null
@@ -330,6 +343,7 @@ export type UserUncheckedCreateInput = {
   password: string
   name: string
   role?: $Enums.Role
+  googleId?: string | null
   avatarUrl?: string | null
   coverUrl?: string | null
   resetToken?: string | null
@@ -345,6 +359,7 @@ export type UserUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -360,6 +375,7 @@ export type UserUncheckedUpdateInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -375,6 +391,7 @@ export type UserCreateManyInput = {
   password: string
   name: string
   role?: $Enums.Role
+  googleId?: string | null
   avatarUrl?: string | null
   coverUrl?: string | null
   resetToken?: string | null
@@ -390,6 +407,7 @@ export type UserUpdateManyMutationInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -405,6 +423,7 @@ export type UserUncheckedUpdateManyInput = {
   password?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   resetToken?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -420,6 +439,7 @@ export type UserCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
@@ -435,6 +455,7 @@ export type UserMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
@@ -450,6 +471,7 @@ export type UserMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   name?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  googleId?: Prisma.SortOrder
   avatarUrl?: Prisma.SortOrder
   coverUrl?: Prisma.SortOrder
   resetToken?: Prisma.SortOrder
@@ -487,6 +509,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   name?: boolean
   role?: boolean
+  googleId?: boolean
   avatarUrl?: boolean
   coverUrl?: boolean
   resetToken?: boolean
@@ -502,6 +525,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   name?: boolean
   role?: boolean
+  googleId?: boolean
   avatarUrl?: boolean
   coverUrl?: boolean
   resetToken?: boolean
@@ -517,6 +541,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   name?: boolean
   role?: boolean
+  googleId?: boolean
   avatarUrl?: boolean
   coverUrl?: boolean
   resetToken?: boolean
@@ -532,6 +557,7 @@ export type UserSelectScalar = {
   password?: boolean
   name?: boolean
   role?: boolean
+  googleId?: boolean
   avatarUrl?: boolean
   coverUrl?: boolean
   resetToken?: boolean
@@ -541,7 +567,7 @@ export type UserSelectScalar = {
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "avatarUrl" | "coverUrl" | "resetToken" | "resetTokenExpiresAt" | "refreshTokenHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "name" | "role" | "googleId" | "avatarUrl" | "coverUrl" | "resetToken" | "resetTokenExpiresAt" | "refreshTokenHash" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
@@ -552,6 +578,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string
     name: string
     role: $Enums.Role
+    googleId: string | null
     avatarUrl: string | null
     coverUrl: string | null
     resetToken: string | null
@@ -987,6 +1014,7 @@ export interface UserFieldRefs {
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'Role'>
+  readonly googleId: Prisma.FieldRef<"User", 'String'>
   readonly avatarUrl: Prisma.FieldRef<"User", 'String'>
   readonly coverUrl: Prisma.FieldRef<"User", 'String'>
   readonly resetToken: Prisma.FieldRef<"User", 'String'>
