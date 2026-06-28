@@ -4,5 +4,5 @@ import { IsString } from "class-validator";
 export class GoogleLoginDto {
   @ApiProperty({ example: ''})
   @IsString()
-  idToekn!: string;
+  idToken!: string;
 }

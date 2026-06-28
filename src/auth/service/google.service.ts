@@ -13,7 +13,7 @@ export class GoogleService {
     private readonly prisma: PrismaService,
     private readonly authTokenService: AuthTokenService,
     private readonly typedConfigService: TypedConfigService,
-     private readonly bcryptSservice: BcryptService,
+    private readonly bcryptSservice: BcryptService,
   ) {
     this.client = new OAuth2Client(typedConfigService.get('GOOGLE_CLIENT_ID'));
   }
